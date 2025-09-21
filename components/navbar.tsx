@@ -15,6 +15,8 @@ import { Input } from "@heroui/input";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
+
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
@@ -23,12 +25,22 @@ import {
   DiscordIcon,
   SearchIcon,
 } from "@/components/icons";
-import Image from "next/image";
+
 import logo from "../assets/images/freshcart-logo.svg";
+
 import { signOut, useSession } from "next-auth/react";
+
 import { CartProduct } from "@/types/cart.types";
+
 import { useCart } from "@/context/CartContext";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User } from "@heroui/react";
+
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  User,
+} from "@heroui/react";
 import { UserRound } from "lucide-react";
 
 export const Navbar = () => {
@@ -87,7 +99,7 @@ export const Navbar = () => {
                   className={clsx(
                     "hover:text-green-600 transition-colors relative inline-flex items-center",
                     pathname === item.href &&
-                    "text-green-600 font-medium data-[active=true]"
+                      "text-green-600 font-medium data-[active=true]"
                   )}
                 >
                   {item.label}
@@ -113,9 +125,9 @@ export const Navbar = () => {
         justify="end"
       >
         <NavbarItem
-          className="hidden sm:flex gap-2"
-          as="nav"
           aria-label="social links"
+          as="nav"
+          className="hidden sm:flex gap-2"
         >
           <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
             <TwitterIcon className="text-default-500" />
@@ -162,34 +174,34 @@ export const Navbar = () => {
               </DropdownTrigger>
               <DropdownMenu aria-label="User Actions" variant="flat">
                 <DropdownItem
-                  className="text-foreground"
                   key="profile"
                   as={Link}
+                  className="text-foreground"
                   href={siteConfig.profileMenuItems[0].href}
                 >
                   {siteConfig.profileMenuItems[0].label}
                 </DropdownItem>
                 <DropdownItem
-                  className="text-foreground"
                   key="wishlist"
                   as={Link}
+                  className="text-foreground"
                   href={siteConfig.profileMenuItems[1].href}
                 >
                   {siteConfig.profileMenuItems[1].label}
                 </DropdownItem>
                 <DropdownItem
-                  className="text-foreground"
                   key="orders"
                   as={Link}
+                  className="text-foreground"
                   href={siteConfig.profileMenuItems[2].href}
                 >
                   {siteConfig.profileMenuItems[2].label}
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
+                  className="text-red-600"
                   color="danger"
                   onPress={logout}
-                  className="text-red-600"
                 >
                   Log out
                 </DropdownItem>
@@ -214,7 +226,10 @@ export const Navbar = () => {
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => {
             // Hide login/register if logged in
-            if (session && (item.label === "Login" || item.label === "Register")) {
+            if (
+              session &&
+              (item.label === "Login" || item.label === "Register")
+            ) {
               return null;
             }
             // Hide logout/cart/wishlist if not logged in
@@ -231,25 +246,24 @@ export const Navbar = () => {
             return (
               <NavbarMenuItem key={`${item.href}-${index}`}>
                 {item.label === "Logout" ? (
-                  <span
+                  <button
+                    className="text-danger hover:text-red-600 bg-transparent border-none cursor-pointer"
                     onClick={logout}
-                    className="text-danger cursor-pointer hover:text-red-600"
                   >
                     Logout
-                  </span>
+                  </button>
                 ) : (
                   <Link
-                    href={item.href}
+                    className="hover:text-green-600 relative inline-flex items-center"
                     color={
                       index === siteConfig.navMenuItems.length - 1
                         ? "danger"
                         : "foreground"
                     }
+                    href={item.href}
                     size="lg"
-                    className="hover:text-green-600 relative inline-flex items-center"
                   >
                     {item.label}
-                    {/* Cart Badge for mobile */}
                     {item.label === "Cart" && cartProducts?.length > 0 && (
                       <span className="absolute -top-2 -right-3 bg-green-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
                         {cartProducts.reduce(
