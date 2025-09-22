@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -77,6 +77,28 @@ const UserProfile = ({ user }: { user: User }) => {
       setIsLoading(false);
     }
   };
+  function InputEditable({
+    value,
+    onChange,
+  }: {
+    value: string;
+    onChange: (value: string) => void;
+  }) {
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+      inputRef.current?.focus();
+    }, []);
+
+    return (
+      <Input
+        ref={inputRef}
+        value={value}
+        variant="bordered"
+        onChange={(e) => onChange(e.target.value)}
+      />
+    );
+  }
 
   const handleChange = (field: Field, value: string) => {
     setData((prev) => ({ ...prev, [field]: value }));
@@ -179,11 +201,9 @@ const UserProfile = ({ user }: { user: User }) => {
 
                   <TableCell>
                     {editing === field ? (
-                      <Input
-                        autoFocus
+                      <InputEditable
                         value={data[field]}
-                        variant="bordered"
-                        onChange={(e) => handleChange(field, e.target.value)}
+                        onChange={(value: string) => handleChange(field, value)}
                       />
                     ) : (
                       <span className="text-gray-600">{data[field]}</span>
@@ -192,12 +212,14 @@ const UserProfile = ({ user }: { user: User }) => {
 
                   <TableCell>
                     <Tooltip content={`Edit ${field}`}>
-                      <span
-                        className="text-lg text-default-400 cursor-pointer active:opacity-50"
+                      <button
+                        type="button"
                         onClick={() => setEditing(field)}
+                        className="text-lg text-default-400 cursor-pointer active:opacity-50 bg-transparent border-none p-0"
+                        aria-label={`Edit ${field}`}
                       >
                         <EditIcon size={18} />
-                      </span>
+                      </button>
                     </Tooltip>
                   </TableCell>
                 </TableRow>
