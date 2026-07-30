@@ -10,7 +10,6 @@ import { useCart } from "@/context/CartContext";
 import { CartProduct } from "@/types/cart.types";
 import CheackoutDetails from "@/components/cheackoutDetails/cheackoutDetails";
 
-
 export default function Cart() {
   const { cartProducts, setCartProducts } = useCart();
   const [isloading, setisloading] = useState(true);
@@ -18,19 +17,17 @@ export default function Cart() {
   const [currentId, setCurrentId] = useState("");
   const [cartId, setCartId] = useState<string | null>(null);
 
-
   async function userCart() {
     try {
       const res = await getUserCart();
       if (res.status === "success") {
         setCartProducts(res.data.products);
-        setisloading(false)
+        setisloading(false);
         setCartId(res.cartId);
       }
     } catch (error) {
       console.error("❌ Error loading cart:", error);
-      setisloading(false)
-
+      setisloading(false);
     }
   }
 
@@ -55,7 +52,7 @@ export default function Cart() {
       const res = await removeFromCart({ id });
       if (res.status === "success") {
         setCartProducts((prev: CartProduct[]) =>
-          prev.filter((item: CartProduct) => item.product._id !== id)
+          prev.filter((item: CartProduct) => item.product._id !== id),
         );
       }
     } catch (error) {
@@ -65,7 +62,6 @@ export default function Cart() {
     }
   }
 
-
   async function clearAllCart() {
     setisDisable(true);
     const res = await clearCart();
@@ -73,14 +69,14 @@ export default function Cart() {
       setCartProducts([]);
       setisDisable(false);
     }
-
   }
 
-
   if (isloading) {
-    return <div className="h-dvh flex justify-center items-center">
-      <Spinner size="lg" color="success" />
-    </div>
+    return (
+      <div className="h-dvh flex justify-center items-center">
+        <Spinner size="lg" color="success" />
+      </div>
+    );
   }
 
   return (
@@ -92,10 +88,18 @@ export default function Cart() {
               <th scope="col" className="px-16 py-3">
                 <span className="sr-only">Image</span>
               </th>
-              <th scope="col" className="px-6 py-3">Product</th>
-              <th scope="col" className="px-6 py-3">Qty</th>
-              <th scope="col" className="px-6 py-3">Price</th>
-              <th scope="col" className="px-6 py-3">Action</th>
+              <th scope="col" className="px-6 py-3">
+                Product
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Qty
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Price
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -131,7 +135,10 @@ export default function Cart() {
                         <button
                           disabled={isDisable}
                           onClick={() =>
-                            updateQuantity(product.product._id, String(product.count - 1))
+                            updateQuantity(
+                              product.product._id,
+                              String(product.count - 1),
+                            )
                           }
                           className="inline-flex text-2xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 items-center justify-center p-1 me-3 h-6 w-6 text-red-600 bg-white border border-gray-300 rounded-full hover:bg-gray-100 dark:bg-gray-700"
                           type="button"
@@ -152,7 +159,10 @@ export default function Cart() {
                         <button
                           disabled={isDisable}
                           onClick={() =>
-                            updateQuantity(product.product._id, `${product.count + 1}`)
+                            updateQuantity(
+                              product.product._id,
+                              `${product.count + 1}`,
+                            )
                           }
                           className="inline-flex text-xl cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 items-center justify-center p-1 ms-3 h-6 w-6 text-green-600 bg-white border border-gray-300 rounded-full hover:bg-gray-100 dark:bg-gray-700"
                           type="button"
@@ -163,7 +173,7 @@ export default function Cart() {
                     </td>
 
                     {/* Price */}
-                    < td className="px-6 py-4 font-semibold text-gray-900 dark:text-white" >
+                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                       {product.price * product.count} EGP
                     </td>
 
@@ -184,21 +194,30 @@ export default function Cart() {
 
                 {/* Total Row */}
                 <tr className="bg-gray-50 dark:bg-gray-900 border-t border-green-600 dark:border-slate-200">
-                  <td className="px-10 py-4 text-center whitespace-nowrap" colSpan={2}>
-
+                  <td
+                    className="px-10 py-4 text-center whitespace-nowrap"
+                    colSpan={2}
+                  >
                     <CheackoutDetails isDisable={isDisable} id={cartId} />
                   </td>
 
-
                   {/* Total Items */}
                   <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                    Total Items: {cartProducts.reduce((sum: number, p: CartProduct) => sum + p.count, 0)}
+                    Total Items:{" "}
+                    {cartProducts.reduce(
+                      (sum: number, p: CartProduct) => sum + p.count,
+                      0,
+                    )}
                   </td>
 
                   {/* Total Price */}
                   <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
                     Total:{" "}
-                    {cartProducts.reduce((sum: number, p: CartProduct) => sum + p.price * p.count, 0)} EGP
+                    {cartProducts.reduce(
+                      (sum: number, p: CartProduct) => sum + p.price * p.count,
+                      0,
+                    )}{" "}
+                    EGP
                   </td>
 
                   {/* Clear Cart Button */}
@@ -207,17 +226,17 @@ export default function Cart() {
                       type="button"
                       disabled={isDisable}
                       onClick={clearAllCart}
-                      className="font-medium disabled:opacity-50 disabled:p-0.5 disabled:rounded-medium disabled:cursor-not-allowed cursor-pointer text-red-600 dark:text-red-500 hover:underline hover:text-red-500 whitespace-nowrap">
+                      className="font-medium disabled:opacity-50 disabled:p-0.5 disabled:rounded-medium disabled:cursor-not-allowed cursor-pointer text-red-600 dark:text-red-500 hover:underline hover:text-red-500 whitespace-nowrap"
+                    >
                       Clear Cart
                     </button>
                   </td>
                 </tr>
-
               </>
             )}
           </tbody>
         </table>
-      </div >
-    </div >
+      </div>
+    </div>
   );
 }
