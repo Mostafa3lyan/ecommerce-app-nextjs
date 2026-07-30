@@ -2,6 +2,7 @@
 import { Card, CardHeader, CardBody } from "@heroui/react";
 import { brandsTypes } from "@/types/brands.types";
 import NextLink from "next/link";
+import Image from "next/image";
 
 export default function AllBrands({ data }: { data: brandsTypes[] }) {
     return (
@@ -14,7 +15,13 @@ export default function AllBrands({ data }: { data: brandsTypes[] }) {
                             <Card isPressable className="py-4">
                                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-start"></CardHeader>
                                 <CardBody className="overflow-visible py-2">
-                                    <img src={brand.image} alt={brand.name} className="w-full h-auto object-contain" />
+                                    <Image
+                                        src={brand.image}
+                                        alt={brand.name}
+                                        width={240}
+                                        height={120}
+                                        className="w-full h-auto object-contain"
+                                    />
                                 </CardBody>
                             </Card>
                         </NextLink>

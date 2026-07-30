@@ -6,7 +6,7 @@ export default async function addToWishlistapi(id: string) {
         const token = await getMyToken();
 
         if (!token) {
-            throw new Error("Please login first to add product to wishlist");
+            return { success: false, status: 401, message: "Please login first to add product to wishlist" };
         }
 
         const res = await fetch("https://ecommerce.routemisr.com/api/v1/wishlist", {
@@ -20,16 +20,13 @@ export default async function addToWishlistapi(id: string) {
 
         if (!res.ok) {
             const errorData = await res.json().catch(() => ({}));
-            throw new Error(errorData.message || "Failed to add product to wishlist");
+            return { success: false, message: errorData.message || "Failed to add product to wishlist" };
         }
 
         const payload = await res.json();
         return payload;
     } catch (error: any) {
-        // You can either throw to let client catch:
-        throw error;
-
-        // OR, if you prefer to handle gracefully:
-        // return { status: "error", message: error.message || "Unknown error" };
+        console.error("addToWishlistapi error:", error);
+        return { success: false, message: error instanceof Error ? error.message : "Unknown error" };
     }
 }

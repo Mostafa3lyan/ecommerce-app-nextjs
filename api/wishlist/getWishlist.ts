@@ -6,9 +6,9 @@ export default async function getWishlist() {
         // Get the token
         const token = await getMyToken();
 
-        // If no token, throw an error prompting the user to log in
+        // If no token, return a structured error (avoid throwing to prevent 500s)
         if (!token) {
-            throw new Error("Please log in first.");
+            return { success: false, status: 401, message: "Please log in first." };
         }
 
         // Fetch the wishlist data from the API

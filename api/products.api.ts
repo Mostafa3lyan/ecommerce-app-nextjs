@@ -5,7 +5,7 @@ export default async function getProducts(brandId?: string) {
     ? `https://ecommerce.routemisr.com/api/v1/products?brand=${brandId}`
     : `https://ecommerce.routemisr.com/api/v1/products`;
 
-  const response = await fetch(url);
+  const response = await fetch(url, { next: { revalidate: 60 } });
   const { data } = await response.json();
 
   return data;

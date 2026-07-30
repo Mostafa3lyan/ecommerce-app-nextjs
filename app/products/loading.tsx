@@ -1,5 +1,3 @@
-"use client";
-
 import { Skeleton, Spinner } from "@heroui/react";
 
 export default function Loading() {

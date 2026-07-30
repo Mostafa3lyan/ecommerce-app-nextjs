@@ -1,39 +1,17 @@
 "use client";
 import { productType } from '@/types/products.types';
 import { Heart, Star } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AddBtn from '../addBtn/addBtn';
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import Image from "next/image";
-import relatedCategory from '@/api/relatedCategory';
 import SingleProduct from '../singleProduct/singleProduct';
 import WishlistBtn from '../wishlistBtn/wishlistBtn';
 
-const Details = ({ data }: { data: productType }) => {
-    const [relatedProducts, setRelatedProducts] = useState<productType[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    async function getRelatedProducts(catId: string) {
-        try {
-            setLoading(true);
-            const res = await relatedCategory(catId);
-            setRelatedProducts(res);
-        } catch (error) {
-            console.error("❌ Failed to fetch related products", error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        if (data?.category?._id) {
-            getRelatedProducts(data.category._id);
-        }
-    }, [data?.category?._id]);
-
+const Details = ({ data, relatedProducts = [] }: { data: productType, relatedProducts?: productType[] }) => {
     return (
         <div className="my-20">
             {/* Product Section */}
@@ -102,9 +80,7 @@ const Details = ({ data }: { data: productType }) => {
             <div className="row mt-10">
                 <h3 className="text-xl font-semibold mb-4">Related Products</h3>
 
-                {loading ? (
-                    <p className="text-gray-500 p-4">Loading related products...</p>
-                ) : relatedProducts.length ? (
+                {relatedProducts?.length ? (
                     <Swiper
                         modules={[Pagination, Autoplay]}
                         autoplay={{ delay: 4000 }}
