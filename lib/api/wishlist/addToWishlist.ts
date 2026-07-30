@@ -1,5 +1,5 @@
 "use server";
-import getMyToken from '../../utilities/getMyToken';
+import getMyToken from '@/utilities/getMyToken';
 
 export default async function addToWishlistapi(id: string) {
     try {

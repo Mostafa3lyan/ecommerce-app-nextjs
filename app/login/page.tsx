@@ -28,9 +28,9 @@ import {
   InputOtp,
 } from "@heroui/react";
 import { Eye, EyeOff, MailIcon } from "lucide-react";
-import forgetPassword from "@/api/profile/forgetPassword";
-import verifyCode from "@/api/profile/verifyCode";
-import resetPassword from "@/api/profile/resetPassword";
+import forgetPassword from "@/lib/api/profile/forgetPassword";
+import verifyCode from "@/lib/api/profile/verifyCode";
+import resetPassword from "@/lib/api/profile/resetPassword";
 
 const Login = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();

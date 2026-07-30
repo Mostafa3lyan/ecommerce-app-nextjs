@@ -10,7 +10,7 @@ import {
 } from "@heroui/react";
 import { Spinner } from "@heroui/spinner";
 import { SortIcon } from "@heroui/shared-icons";
-import getUserOrders from "@/api/getUserOrders";
+import getUserOrders from "@/lib/api/getUserOrders";
 import { ordersTypes } from "@/types/orders.types";
 
 interface UserOrdersProps {

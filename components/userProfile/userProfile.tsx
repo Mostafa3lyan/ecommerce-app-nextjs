@@ -22,8 +22,8 @@ import {
 } from "@heroui/react";
 import { Edit3 as EditIcon, Eye, EyeOff } from "lucide-react";
 import { User } from "@/types/orders.types";
-import updateUserData from "@/api/profile/updateUserData";
-import changePassword from "@/api/profile/changePassword";
+import updateUserData from "@/lib/api/profile/updateUserData";
+import changePassword from "@/lib/api/profile/changePassword";
 
 const UserProfile = ({ user }: { user: User }) => {
   const [data, setData] = useState({
@@ -130,7 +130,7 @@ const UserProfile = ({ user }: { user: User }) => {
       const res = await changePassword(
         currentPassword,
         newPassword,
-        confirmPassword
+        confirmPassword,
       );
 
       if (res.message === "Success") {

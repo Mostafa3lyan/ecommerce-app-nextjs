@@ -1,8 +1,8 @@
 "use client";
-import clearCart from "@/api/cartActions/clearCart";
-import getUserCart from "@/api/cartActions/getUserCart";
-import removeFromCart from "@/api/cartActions/removeFromCart";
-import updateCart from "@/api/cartActions/updateCart";
+import clearCart from "@/lib/api/cartActions/clearCart";
+import getUserCart from "@/lib/api/cartActions/getUserCart";
+import removeFromCart from "@/lib/api/cartActions/removeFromCart";
+import updateCart from "@/lib/api/cartActions/updateCart";
 import { Spinner } from "@heroui/spinner";
 import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";

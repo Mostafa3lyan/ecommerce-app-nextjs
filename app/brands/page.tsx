@@ -1,4 +1,4 @@
-import getBrands from "@/api/getBrands";
+import getBrands from "@/lib/api/getBrands";
 import AllBrands from "@/components/allBrands/allBrands";
 
 export default async function brands() {

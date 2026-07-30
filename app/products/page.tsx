@@ -1,4 +1,4 @@
-import getProducts from "@/api/products.api";
+import getProducts from "@/lib/api/products.api";
 import AllProducts from "@/components/allProducts/allProducts";
 import { productType } from "@/types/products.types";
 
@@ -6,7 +6,9 @@ interface ProductsPageProps {
   searchParams?: Promise<{ brand?: string }>;
 }
 
-export default async function ProductsPage({ searchParams }: ProductsPageProps) {
+export default async function ProductsPage({
+  searchParams,
+}: ProductsPageProps) {
   const resolvedParams = await searchParams;
   const brandId = resolvedParams?.brand;
 

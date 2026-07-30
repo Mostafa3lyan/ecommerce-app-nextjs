@@ -1,5 +1,5 @@
 "use client";
-import clearCart from "@/api/cartActions/clearCart";
+import clearCart from "@/lib/api/cartActions/clearCart";
 import {
   Drawer,
   DrawerContent,
@@ -13,7 +13,7 @@ import {
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCart } from "@/context/CartContext";
-import placeOrder from "@/api/cartActions/onlineOrder";
+import placeOrder from "@/lib/api/cartActions/onlineOrder";
 
 type CheackoutDetailsProps = {
   id: string | null;
@@ -92,7 +92,7 @@ export default function CheackoutDetails({
         "online",
         id,
         address,
-        window.location.origin
+        window.location.origin,
       );
       await clearCart();
       setCartProducts([]);
